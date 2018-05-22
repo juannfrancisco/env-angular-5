@@ -1,9 +1,10 @@
-FROM ubuntu:16.04
+FROM node:latest
 LABEL authors="Juan Francisco - juan.maldonado.leon@gmail.com"
 
-RUN apt-get update && apt-get install -y curl git-core \
-    && curl -sL https://deb.nodesource.com/setup_10.x | bash - && apt-get install -y nodejs && apt-get clean \
-    && npm i npm@latest -g && npm install -g @angular/cli \
-    && mkdir /home/dev
+USER node
+
+ENV PATH=/home/node/.npm-global/bin:$PATH
+ENV NPM_CONFIG_PREFIX=/home/node/.npm-global
+RUN mkdir /home/node/.npm-global && npm install -g @angular/cli@1.7.4
 
 WORKDIR /home/dev
